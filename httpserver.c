@@ -11,8 +11,6 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <unistd.h>
 
 #include "libhttp.h"
@@ -84,24 +82,9 @@ int is_regular_file(char *path)
     return S_ISREG(path_stat.st_mode);
 }
 
-int file_exists(char *filename){ //0 -> false 1 -> exist
-    FILE *fp = fopen(filename, "r");
-    int is_exist = 0;
-    if (fp != NULL)
-    {
-        is_exist = 1;
-        fclose(fp); // close the file
-    }
-    return is_exist;
-}
-
 /*
  * Serves the contents the file stored at `path` to the client socket `fd`.
- * It is the caller's reponsibility to ensure that the file stored at `path` exists.
- * You can change these functions to anything you want.
- * 
- * ATTENTION: Be careful to optimize your code. Judge is
- *            sesnsitive to time-out errors.
+ * It is the caller's responsibility to ensure that the file stored at `path` exists.
  */
 void serve_file(int fd, char *path) {
    FILE *fptr;
@@ -136,16 +119,6 @@ void serve_file(int fd, char *path) {
    
    close(fd);
 }
-
-void serve_directory(int fd, char *path) {
-  http_start_response(fd, 200);
-  http_send_header(fd, "Content-Type", http_get_mime_type(".html"));
-  http_end_headers(fd);
-
-  /* TODO: PART 1 Bullet 3,4 */
-
-}
-
 
 /*
  * Reads an HTTP request from stream (fd), and writes an HTTP response
@@ -185,21 +158,16 @@ void handle_files_request() {
     continue;
   }
 
-  /* Remove beginning `./` */
   char *path = malloc(2 + strlen(request->path) + 1);
-  //path[0] = '.';
-  //path[1] = '/';
   memcpy(path, request->path, strlen(request->path) + 1);
 
   /* 
-   * TODO: First is to serve files. If the file given by `path` exists,
+   * First is to serve files. If the file given by `path` exists,
    * call serve_file() on it. Else, serve a 404 Not Found error below.
    *
-   * TODO: Second is to serve both files and directories. You will need to
+   * Second is to serve both files and directories. We will need to
    * determine when to call serve_file() or serve_directory() depending
    * on `path`.
-   *  
-   * Feel FREE to delete/modify anything on this function.
    */
    char cwd_path[128];
    getcwd(cwd_path, 128);
@@ -244,8 +212,10 @@ void handle_files_request() {
        http_end_headers(fd);
        http_send_string(fd,final_string);
 
-      // list_directory();
-       
+       /*
+        * listing directory
+        */
+
        close(fd);
        free(final_string);
        free(path);
@@ -259,22 +229,7 @@ void handle_files_request() {
        free(path);
        continue;
      }
-/*
-  http_start_response(fd, 200);
-  http_send_header(fd, "Content-Type", "text/html");
-  http_end_headers(fd);
-  http_send_string(fd,
-      "<center>"
-      "<h1>Welcome to httpserver!</h1>"
-      "<hr>"
-      "<p>Nothing's here yet.</p>"
-      "</center>");
-
-  close(fd);
-*/
-    //return;
-
-  }//while(1)
+  }
 }
 
 /*
@@ -328,10 +283,9 @@ void handle_proxy_request() {
      }
      int fd = wq_pop(&work_queue);
      pthread_mutex_unlock(&mutex_queue);
-   // printf("4\n");
   /*
   * The code below does a DNS lookup of server_proxy_hostname and 
-  * opens a connection to it. Please do not modify.
+  * opens a connection to it.
   */
 
   struct sockaddr_in target_address;
@@ -374,9 +328,6 @@ void handle_proxy_request() {
     return;
 
   }
-  /* 
-  * TODO: Your solution for task 3 belongs here! 
-  */
 //this thread will listen on (client - > proxy) requests
 
     struct timeval timeout;      
@@ -401,7 +352,7 @@ void handle_proxy_request() {
     input1.target_fd = fd;
 
     pthread_t thread;
-    pthread_create(&thread, NULL, &listen_and_answer, &input1);
+    pthread_create(&thread, NULL, (void *(*)(void *)) &listen_and_answer, &input1);
 
     struct input input2;
     input2.fd = fd;
@@ -482,23 +433,15 @@ void serve_forever(int *socket_number, void (*request_handler)) {
         inet_ntoa(client_address.sin_addr),
         client_address.sin_port);
 
-    // TODO: Change me?
-    //
     pthread_mutex_lock(&mutex_queue);
     wq_push(&work_queue,client_socket_number);
     pthread_mutex_unlock(&mutex_queue);
     pthread_cond_signal(&cond_queue);
-    //
-    //request_handler(client_socket_number);
-    //close(client_socket_number);
 
     printf("Accepted connection from %s on port %d\n",
         inet_ntoa(client_address.sin_addr),
         client_address.sin_port);
   }
-
-  shutdown(*socket_number, SHUT_RDWR);
-  close(*socket_number);
 }
 
 int server_fd;
@@ -527,7 +470,7 @@ int main(int argc, char **argv) {
   void (*request_handler) = NULL;
 
 
-  //
+  // mutex init
   wq_init(&work_queue);
   pthread_mutex_init(&mutex_queue, NULL);
   pthread_cond_init(&cond_queue, NULL);

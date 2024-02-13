@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #include "libword.h"
 
@@ -28,12 +27,7 @@ char* int_to_str(int a){
       r++;
       a_copy /= 10;
    }
-//
-printf("r = %d\n",r);
-for(int i = 0; i < r; i++){
-printf("number[%d] = %d\n",i,number[i]);
-}
-//
+
    for(int i = r - 1; i >= 0; i--){
       printf("i = %d\n", i );
       if(number[i] == 0){
@@ -63,7 +57,6 @@ printf("number[%d] = %d\n",i,number[i]);
       }
    }
    strcat(result, "\0");
-   printf("result = %s\n",result);
    return result;
 }
 
@@ -80,5 +73,4 @@ void slash_remover(char* string){
       string[index - 1] = '\0';
       index--;
    }
-   
 }
