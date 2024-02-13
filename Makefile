@@ -1,13 +1,14 @@
 CC=gcc
 CFLAGS=-ggdb3 -c -Wall -std=gnu99
 LDFLAGS=-pthread
-SOURCES=httpserver.c libhttp.c wq.c libword.c
+SOURCES=./server/httpserver.c ./http-library/libhttp.c ./work-queue/wq.c ./word-library/libword.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=httpserver
+EXECUTABLE=./build/httpserver
 
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
+	mkdir build
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 .c.o:
@@ -15,3 +16,4 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	rm -f $(EXECUTABLE) $(OBJECTS)
+	rmdir build

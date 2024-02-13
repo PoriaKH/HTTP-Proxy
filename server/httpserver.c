@@ -13,9 +13,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "libhttp.h"
-#include "wq.h"
-#include "libword.h"
+#include "../http-library/libhttp.h"
+#include "../work-queue/wq.h"
+#include "../word-library/libword.h"
 
 /*
  * Global configuration variables.
