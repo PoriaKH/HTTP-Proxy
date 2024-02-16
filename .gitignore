@@ -66,6 +66,7 @@
 .idea_modules/
 
 **/*.o
+.idea
 
 # JIRA plugin
 atlassian-ide-plugin.xml
