@@ -6,7 +6,7 @@
 
 /* Initializes a work queue WQ. */
 void wq_init(wq_t *wq) {
-    // by default it is thread-safe, managed in main().
+    // by default, it is thread-safe, managed in main().
 
   wq->size = 0;
   wq->head = NULL;
@@ -15,7 +15,7 @@ void wq_init(wq_t *wq) {
 /* Remove an item from the WQ. This function should block until there
  * is at least one item on the queue. */
 int wq_pop(wq_t *wq) {
-    //by default it is thread-safe and blocking, managed in file and proxy handler functions.
+    //by default, it is thread-safe and blocking, managed in file and proxy handler functions.
 
   wq_item_t *wq_item = wq->head;
   int client_socket_fd = wq->head->client_socket_fd;
@@ -28,7 +28,7 @@ int wq_pop(wq_t *wq) {
 
 /* Add ITEM to WQ. */
 void wq_push(wq_t *wq, int client_socket_fd) {
-    // by default it is thread-safe, managed in file and proxy handler functions.
+    // by default, it is thread-safe, managed in file and proxy handler functions.
 
   wq_item_t *wq_item = calloc(1, sizeof(wq_item_t));
   wq_item->client_socket_fd = client_socket_fd;

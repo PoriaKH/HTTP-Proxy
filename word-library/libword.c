@@ -1,5 +1,3 @@
-#include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -13,23 +11,19 @@ int counter(char string[]){
    return i;
 }
 
-
 char* int_to_str(int a){
-   printf("a = %d\n",a);
    int r = 0;
    char* result = malloc(sizeof(char) * 50);   
    int number[50]; 
 
    int a_copy = a;
    while(a_copy > 0){
-      printf("a_copy = %d\n",a_copy);
       number[r] = a_copy % 10;
       r++;
       a_copy /= 10;
    }
 
    for(int i = r - 1; i >= 0; i--){
-      printf("i = %d\n", i );
       if(number[i] == 0){
          strcat(result, "0");
       }
@@ -52,7 +46,6 @@ char* int_to_str(int a){
       else if(number[i] == 9)
          strcat(result, "9");
       else{
-         printf("Error in int_to_str");
          return "Error in int_to_str";
       }
    }
