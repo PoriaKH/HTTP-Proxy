@@ -14,6 +14,7 @@ Use the first command to enter proxy mode, second command to enter the server mo
 `--proxy` to enter proxy mode, the origin server comes right after this flag.<br/>
 `--num-threads` is for the number of threads in thread-pool.</br>
 `--port` flag is the open port number of the server which is defined by the `server_port` variable in `httpserver.c`, the default `server_port` is `8000`.<br/>
+<br/>
 You can send your HTTP requests via `curl` to the server as bellow.
 ```
 $ curl -v http ://127.0.0.1:8000/
