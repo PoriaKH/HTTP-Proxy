@@ -6,8 +6,8 @@ This is a thread-safe project which supports multithreading via thread-pool. <br
 The project have 2 modes, in the first mode server acts as a proxy server, recevies a request, passes it to the origin server, gets the answer from the server and passes it to the client.</br>
 In the second mode, server acts as the main server, recevies a request , searches through the server files for the answer and passes the answer to the client.<br/>
 ```
-./httpserver --proxy www.google.com:80 [--port 8000 --num-threads 5]
-./httpserver --files files/ [--port 8000 --num-threads 5]
+$ ./httpserver --proxy www.google.com:80 [--port 8000 --num-threads 5]
+$ ./httpserver --files files/ [--port 8000 --num-threads 5]
 ```
 Use the first command to enter proxy mode, second command to enter the server mode.<br/>
 `--files` flag is used to set the server database directory in the server mode.<br/>
