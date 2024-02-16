@@ -13,7 +13,18 @@ Use the first command to enter proxy mode, second command to enter the server mo
 `--files` flag is used to set the server database directory in the server mode.<br/>
 `--proxy` to enter proxy mode, the origin server comes right after this flag.<br/>
 `--num-threads` is for the number of threads in thread-pool.</br>
-`--port` flag is the open port number of the server which is defined by the `server_port` variable in `httpserver.c`.<br/>
+`--port` flag is the open port number of the server which is defined by the `server_port` variable in `httpserver.c`, the default `server_port` is `8000`.<br/>
+You can send your HTTP requests via `curl` to the server as bellow.
+```
+$ curl -v http ://127.0.0.1:8000/
+$ curl -v http://127.0.0.1:8000/index.html
+$ curl -v http://127.0.0.1:8000/path/to/file
+```
+Also you can use netcat as bellow.
+```
+$ nc -v 127.0.0.1 8000
+Connection to 127.0.0.1 8000 port [tcp/*] succeeded! (Now, type out your HTTP request here.)
+```
 ### Build
 Use `make` to build the project. The executable file will be in the `dist` directory. <br/>
 `make clean` to clean the artifacts. <br/>
