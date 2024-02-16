@@ -9,8 +9,8 @@ In the second mode, server acts as the main server, recevies a request , searche
 ./httpserver --proxy www.google.com:80 [--port 8000 --num-threads 5]
 ./httpserver --files files/ [--port 8000 --num-threads 5]
 ```
-Use the first command to enter proxy mode, second command to enter the server mode.
-`--files` flag is used to set the server database directory in the server mode.</br>
+Use the first command to enter proxy mode, second command to enter the server mode.<br/>
+`--files` flag is used to set the server database directory in the server mode.<br/>
 `--proxy` to enter proxy mode, the origin server comes right after this flag.<br/>
 `--num-threads` is for the number of threads in thread-pool.</br>
 `--port` flag is the open port number of the server which is defined by the `server_port` variable in `httpserver.c`.<br/>
