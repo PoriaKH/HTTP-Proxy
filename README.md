@@ -14,7 +14,6 @@ Use the first command to enter proxy mode, second command to enter the server mo
 `--proxy` to enter proxy mode, the origin server comes right after this flag.<br/>
 `--num-threads` is for the number of threads in thread-pool.</br>
 `--port` flag is the open port number of the server which is defined by the `server_port` variable in `httpserver.c`.<br/>
-`localIP` ip address and `localPort` port. you can change these variables to your own server ip, port.
 ### Build
 Use `make` to build the project. The executable file will be in the `dist` directory. <br/>
 `make clean` to clean the artifacts. <br/>
