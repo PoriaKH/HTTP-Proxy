@@ -27,5 +27,5 @@ $ nc -v 127.0.0.1 8000
 Connection to 127.0.0.1 8000 port [tcp/*] succeeded! (Now, type out your HTTP request here.)
 ```
 ### Build
-Use `make` to build the project. The executable file will be in the `dist` directory. <br/>
+Use `make` to build the project. The executable file will be in the `./build` directory. <br/>
 `make clean` to clean the artifacts. <br/>
