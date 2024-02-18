@@ -1,10 +1,16 @@
 # HTTP-Proxy
 An HTTP proxy server which recevies http request from client and returns the demanded answer. <br/>
 This is a thread-safe project which supports multithreading via thread-pool. <br/>
+### How It Works
+The project have 2 modes, in the first mode server acts as a proxy server, recevies a request, passes it to the origin server, gets the answer from the server and passes it to the client.
+<img width="383" alt="image" src="https://github.com/PoriaKH/HTTP-Proxy/assets/94684621/057e3a86-f4aa-4d9b-80b4-e0ac0caa5c32">
+In the second mode, server acts as the main server, recevies a request , searches through the server files for the answer and passes the answer to the client.<br/>
+  - If user requested an existing file, server responds with the file
+  - If user requested a directory and index.html exists in the directory, server responds with the index.html file.
+  - If user requested a directory and index.html doesn't exist, server will send a list of files in the directory with links to each.
+  - Otherwise server will send a 404 Not Found response.
 
 ### Usage
-The project have 2 modes, in the first mode server acts as a proxy server, recevies a request, passes it to the origin server, gets the answer from the server and passes it to the client.</br>
-In the second mode, server acts as the main server, recevies a request , searches through the server files for the answer and passes the answer to the client.<br/>
 ```
 $ ./httpserver --proxy www.google.com:80 [--port 8000 --num-threads 5]
 $ ./httpserver --files files/ [--port 8000 --num-threads 5]
